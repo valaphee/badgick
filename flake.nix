@@ -20,8 +20,12 @@
       packages = [
         toolchain
         pkgs.rust-analyzer-unwrapped
+
         #pkgs.probe-rs-tools
         pkgs.wchisp
+
+        pkgs.svdtools
+        pkgs.svd2rust
       ];
 
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library";

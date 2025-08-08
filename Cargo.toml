@@ -4,3 +4,14 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+critical-section = "1.2"
+riscv = { version = "0.14", features = ["critical-section-single-hart"] }
+riscv-rt = { version = "0.15", features = ["device", "memory", "v-trap"] }
+vcell = "0.1"
+
+embassy-executor = { version = "0.8", features = ["arch-riscv32", "executor-thread"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
