@@ -1,0 +1,12 @@
+[package]
+name = "ch58x-hal"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+riscv = "0.14"
+riscv-rt = { version = "0.15", optional = true }
+
+ch58x-pac = { path = "../ch58x-pac", features = ["critical-section", "rt", "v-trap"] }
+
+embedded-hal = "1.0"

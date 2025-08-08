@@ -1,13 +1,17 @@
+[workspace]
+resolver = "3"
+members = ["ch58x-pac", "ch58x-hal"]
+
 [package]
 name = "badgick"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-critical-section = "1.2"
 riscv = { version = "0.14", features = ["critical-section-single-hart"] }
 riscv-rt = { version = "0.15", features = ["device", "memory", "v-trap"] }
-vcell = "0.1"
+
+ch58x-pac = { path = "ch58x-pac", features = ["critical-section", "rt", "v-trap"] }
 
 embassy-executor = { version = "0.8", features = ["arch-riscv32", "executor-thread"] }
 

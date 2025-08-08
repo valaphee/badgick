@@ -1,0 +1,75 @@
+_svd: CH58Xxx.svd
+
+"*":
+  _strip:
+    - R8_
+    - R16_
+    - R32_
+  "*":
+    _strip:
+      - RB_
+      - R8_
+      - R16_
+      - R32_
+
+SYS:
+  CK32K_CONFIG:
+    _modify:
+      32K_CLK_PIN:
+        name: CLK_32K_PIN
+
+TMR*:
+  _strip:
+    - TMR*_
+  "*":
+    _strip:
+      - TMR*_
+
+UART*:
+  _strip:
+    - UART*_
+  "*":
+    _strip:
+      - UART*_
+
+SPI*:
+  _strip:
+    - SPI*_
+  "*":
+    _strip:
+      - SPI*_
+
+I2C:
+  _strip:
+    - I2C_
+  "*":
+    _strip:
+      - I2C_
+
+USB:
+  _strip:
+    - USB_
+  "*":
+    _strip:
+      - USB_
+
+USB2:
+  _strip:
+    - USB2_
+  "*":
+    _strip:
+      - USB2_
+
+PFIC:
+  _strip:
+    - PFIC_
+  "*":
+    _strip:
+      - PFIC_
+
+Systick:
+  _strip:
+    - STK_
+  "*":
+    _strip:
+      - STK_
