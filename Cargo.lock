@@ -6,24 +6,14 @@ version = 4
 name = "badgick"
 version = "0.1.0"
 dependencies = [
- "ch58x-pac",
+ "ch58x",
  "embassy-executor",
  "riscv",
  "riscv-rt",
 ]
 
 [[package]]
-name = "ch58x-hal"
-version = "0.1.0"
-dependencies = [
- "ch58x-pac",
- "embedded-hal",
- "riscv",
- "riscv-rt",
-]
-
-[[package]]
-name = "ch58x-pac"
+name = "ch58x"
 version = "0.1.0"
 dependencies = [
  "critical-section",
