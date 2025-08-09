@@ -8,13 +8,18 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+critical-section = "1.2"
 riscv = { version = "0.14", features = ["critical-section-single-hart" ] }
 riscv-rt = { version = "0.15", features = ["device", "memory", "single-hart", "v-trap" ] }
 ch58x = { path = "ch58x", features = ["critical-section", "rt"] }
+fugit = "0.3"
 
 embedded-hal = "1.0"
 
 embassy-executor = { version = "0.8", features = ["arch-riscv32", "executor-thread"] }
+embassy-time-driver = "0.2"
+embassy-time-queue-utils = "0.2"
+embassy-sync = "0.7"
 
 [profile.release]
 lto = true

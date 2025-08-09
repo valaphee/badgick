@@ -9431,8 +9431,8 @@
             </addressBlock>
             <registers>
                 <register>
-                    <name>R32_STK_CTLR</name>
-                    <displayName>STK_CTLR</displayName>
+                    <name>R32_STK_CTL</name>
+                    <displayName>STK_CTL</displayName>
                     <description>Systick counter control register</description>
                     <addressOffset>0x00</addressOffset>
                     <size>0x20</size>
@@ -9483,7 +9483,7 @@
                     </fields>
                 </register>
                 <register>
-                    <name>R32_STK_SR</name>
+                    <name>R32_STK_S</name>
                     <description>Systick count status register</description>
                     <addressOffset>0x04</addressOffset>
                     <size>0x20</size>
@@ -9498,62 +9498,32 @@
                     </fields>
                 </register>
                 <register>
-                    <name>R32_STK_CNTL</name>
-                    <description>Systick counter low register</description>
+                    <name>CNT</name>
+                    <description>Systick counter register</description>
                     <addressOffset>0x08</addressOffset>
-                    <size>0x20</size>
+                    <size>0x40</size>
                     <access>read-write</access>
                     <resetValue>0x00000000</resetValue>
                     <fields>
                         <field>
-                            <name>CNTL</name>
-                            <description>RW,CNTL</description>
-                            <bitRange>[31:0]</bitRange>
+                            <name>CNT</name>
+                            <description>RW,CNT</description>
+                            <bitRange>[63:0]</bitRange>
                         </field>
                     </fields>
                 </register>
                 <register>
-                    <name>R32_STK_CNTH</name>
-                    <description>Systick counter high register</description>
-                    <addressOffset>0x0C</addressOffset>
-                    <size>0x20</size>
-                    <access>read-write</access>
-                    <resetValue>0x00000000</resetValue>
-                    <fields>
-                        <field>
-                            <name>CNTH</name>
-                            <description>RW,CNTH</description>
-                            <bitRange>[31:0]</bitRange>
-                        </field>
-                    </fields>
-                </register>
-                <register>
-                    <name>R32_STK_CMPLR</name>
-                    <description>Systick compare low register</description>
+                    <name>CMP</name>
+                    <description>Systick compare register</description>
                     <addressOffset>0x10</addressOffset>
-                    <size>0x20</size>
+                    <size>0x40</size>
                     <access>read-write</access>
                     <resetValue>0x00000000</resetValue>
                     <fields>
                         <field>
-                            <name>CMPL</name>
-                            <description>RW,CMPL</description>
-                            <bitRange>[31:0]</bitRange>
-                        </field>
-                    </fields>
-                </register>
-                <register>
-                    <name>R32_STK_CMPHR</name>
-                    <description>Systick compare high register</description>
-                    <addressOffset>0x14</addressOffset>
-                    <size>0x20</size>
-                    <access>read-write</access>
-                    <resetValue>0x00000000</resetValue>
-                    <fields>
-                        <field>
-                            <name>CMPH</name>
-                            <description>RW,CMPH</description>
-                            <bitRange>[31:0]</bitRange>
+                            <name>CMP</name>
+                            <description>RW,CMP</description>
+                            <bitRange>[63:0]</bitRange>
                         </field>
                     </fields>
                 </register>

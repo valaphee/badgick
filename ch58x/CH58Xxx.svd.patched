@@ -9425,8 +9425,8 @@
       </addressBlock>
       <registers>
         <register>
-          <name>CTLR</name>
-          <displayName>CTLR</displayName>
+          <name>CTL</name>
+          <displayName>CTL</displayName>
           <description>Systick counter control register</description>
           <addressOffset>0x0</addressOffset>
           <size>0x20</size>
@@ -9477,7 +9477,7 @@
           </fields>
         </register>
         <register>
-          <name>SR</name>
+          <name>S</name>
           <description>Systick count status register</description>
           <addressOffset>0x4</addressOffset>
           <size>0x20</size>
@@ -9492,62 +9492,32 @@
           </fields>
         </register>
         <register>
-          <name>CNTL</name>
-          <description>Systick counter low register</description>
+          <name>CNT</name>
+          <description>Systick counter register</description>
           <addressOffset>0x8</addressOffset>
-          <size>0x20</size>
+          <size>0x40</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>CNTL</name>
-              <description>RW,CNTL</description>
-              <bitRange>[31:0]</bitRange>
+              <name>CNT</name>
+              <description>RW,CNT</description>
+              <bitRange>[63:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>CNTH</name>
-          <description>Systick counter high register</description>
-          <addressOffset>0xC</addressOffset>
-          <size>0x20</size>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <fields>
-            <field>
-              <name>CNTH</name>
-              <description>RW,CNTH</description>
-              <bitRange>[31:0]</bitRange>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>CMPLR</name>
-          <description>Systick compare low register</description>
+          <name>CMP</name>
+          <description>Systick compare register</description>
           <addressOffset>0x10</addressOffset>
-          <size>0x20</size>
+          <size>0x40</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>CMPL</name>
-              <description>RW,CMPL</description>
-              <bitRange>[31:0]</bitRange>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>CMPHR</name>
-          <description>Systick compare high register</description>
-          <addressOffset>0x14</addressOffset>
-          <size>0x20</size>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <fields>
-            <field>
-              <name>CMPH</name>
-              <description>RW,CMPH</description>
-              <bitRange>[31:0]</bitRange>
+              <name>CMP</name>
+              <description>RW,CMP</description>
+              <bitRange>[63:0]</bitRange>
             </field>
           </fields>
         </register>

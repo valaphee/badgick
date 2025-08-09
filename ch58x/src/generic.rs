@@ -118,17 +118,19 @@ pub trait Writable: RegisterSpec {
     /// Is it safe to write any bits to register
     type Safety;
 
-    /// Specifies the register bits that are not changed if you pass `1` and are changed if you pass `0`
+    /// Specifies the register bits that are not changed if you pass `1` and are
+    /// changed if you pass `0`
     const ZERO_TO_MODIFY_FIELDS_BITMAP: Self::Ux = Self::Ux::ZERO;
 
-    /// Specifies the register bits that are not changed if you pass `0` and are changed if you pass `1`
+    /// Specifies the register bits that are not changed if you pass `0` and are
+    /// changed if you pass `1`
     const ONE_TO_MODIFY_FIELDS_BITMAP: Self::Ux = Self::Ux::ZERO;
 }
 
 /// Reset value of the register.
 ///
-/// This value is the initial value for the `write` method. It can also be directly written to the
-/// register by using the `reset` method.
+/// This value is the initial value for the `write` method. It can also be
+/// directly written to the register by using the `reset` method.
 pub trait Resettable: RegisterSpec {
     /// Reset value of the register.
     const RESET_VALUE: Self::Ux = Self::Ux::ZERO;
@@ -251,8 +253,8 @@ pub mod raw {
 
 /// Register reader.
 ///
-/// Result of the `read` methods of registers. Also used as a closure argument in the `modify`
-/// method.
+/// Result of the `read` methods of registers. Also used as a closure argument
+/// in the `modify` method.
 pub type R<REG> = raw::R<REG>;
 
 impl<REG: RegisterSpec> R<REG> {
@@ -277,7 +279,8 @@ where
 
 /// Register writer.
 ///
-/// Used as an argument to the closures in the `write` and `modify` methods of the register.
+/// Used as an argument to the closures in the `write` and `modify` methods of
+/// the register.
 pub type W<REG> = raw::W<REG>;
 
 impl<REG: Writable> W<REG> {
@@ -285,7 +288,8 @@ impl<REG: Writable> W<REG> {
     ///
     /// # Safety
     ///
-    /// Passing incorrect value can cause undefined behaviour. See reference manual
+    /// Passing incorrect value can cause undefined behaviour. See reference
+    /// manual
     #[inline(always)]
     pub unsafe fn bits(&mut self, bits: REG::Ux) -> &mut Self {
         self.bits = bits;
@@ -371,9 +375,11 @@ impl<FI> core::fmt::Debug for BitReader<FI> {
     }
 }
 
-/// Marker for register/field writers which can take any value of specified width
+/// Marker for register/field writers which can take any value of specified
+/// width
 pub struct Safe;
-/// You should check that value is allowed to pass to register/field writer marked with this
+/// You should check that value is allowed to pass to register/field writer
+/// marked with this
 pub struct Unsafe;
 /// Marker for field writers are safe to write in specified inclusive range
 pub struct Range<const MIN: u64, const MAX: u64>;
@@ -417,7 +423,8 @@ where
     ///
     /// # Safety
     ///
-    /// Passing incorrect value can cause undefined behaviour. See reference manual
+    /// Passing incorrect value can cause undefined behaviour. See reference
+    /// manual
     #[inline(always)]
     pub unsafe fn bits(self, value: FI::Ux) -> &'a mut W<REG> {
         self.w.bits &= !(REG::Ux::mask::<WI>() << self.o);
@@ -951,4 +958,3 @@ where
         core::fmt::Debug::fmt(&self.read(), f)
     }
 }
-
