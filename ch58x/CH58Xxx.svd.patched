@@ -37,16 +37,6 @@
         <value>16</value>
       </interrupt>
       <interrupt>
-        <name>GPIO_A</name>
-        <description>GPIO_IRQHandler</description>
-        <value>17</value>
-      </interrupt>
-      <interrupt>
-        <name>GPIO_B</name>
-        <description>GPIO_IRQHandler</description>
-        <value>18</value>
-      </interrupt>
-      <interrupt>
         <name>SPI0</name>
         <description>SPI0_IRQHandler</description>
         <value>19</value>
@@ -95,11 +85,6 @@
         <name>RTC</name>
         <description>RTC_IRQHandler</description>
         <value>28</value>
-      </interrupt>
-      <interrupt>
-        <name>ADC</name>
-        <description>ADC_IRQHandler</description>
-        <value>29</value>
       </interrupt>
       <interrupt>
         <name>I2C</name>
@@ -602,7 +587,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>BAT_DET_EN__RB_BAT_LOW_VTHX</name>
+              <name>BAT_DET_EN</name>
+              <description>RWA, battery voltage detector enable/select monitor threshold voltage</description>
+              <bitRange>[0:0]</bitRange>
+            </field>
+            <field>
+              <name>BAT_LOW_VTHX</name>
               <description>RWA, battery voltage detector enable/select monitor threshold voltage</description>
               <bitRange>[0:0]</bitRange>
             </field>
@@ -1254,8 +1244,21 @@
             </field>
           </fields>
         </register>
+      </registers>
+    </peripheral>
+    <peripheral>
+      <name>ADC</name>
+      <description>System Control Register</description>
+      <groupName>SystemControl</groupName>
+      <baseAddress>0x40001000</baseAddress>
+      <interrupt>
+        <name>ADC</name>
+        <description>ADC_IRQHandler</description>
+        <value>29</value>
+      </interrupt>
+      <registers>
         <register>
-          <name>ADC_CHANNEL</name>
+          <name>CHANNEL</name>
           <description>RW, ADC input channel selection</description>
           <addressOffset>0x58</addressOffset>
           <size>0x8</size>
@@ -1263,14 +1266,14 @@
           <resetValue>0x0000000F</resetValue>
           <fields>
             <field>
-              <name>ADC_CH_INX</name>
+              <name>CH_INX</name>
               <description>RW, ADC input channel index</description>
               <bitRange>[3:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_CFG</name>
+          <name>CFG</name>
           <description>RW, ADC configure</description>
           <addressOffset>0x59</addressOffset>
           <size>0x8</size>
@@ -1278,39 +1281,39 @@
           <resetValue>0x000000A0</resetValue>
           <fields>
             <field>
-              <name>ADC_POWER_ON</name>
+              <name>POWER_ON</name>
               <description>RW, ADC power control: 0=power down, 1=power on</description>
               <bitRange>[0:0]</bitRange>
             </field>
             <field>
-              <name>ADC_BUF_EN</name>
+              <name>BUF_EN</name>
               <description>RW, ADC input buffer enable</description>
               <bitRange>[1:1]</bitRange>
             </field>
             <field>
-              <name>ADC_DIFF_EN</name>
+              <name>DIFF_EN</name>
               <description>RW, ADC input channel mode: 0=single-end, 1=differnetial</description>
               <bitRange>[2:2]</bitRange>
             </field>
             <field>
-              <name>ADC_OFS_TEST</name>
+              <name>OFS_TEST</name>
               <description>RW, enable ADC offset test mode: 0=normal mode, 1=short to test offset</description>
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>ADC_PGA_GAIN</name>
+              <name>PGA_GAIN</name>
               <description>RW, set ADC input PGA gain: 00=-12dB, 01=-6dB, 10=0dB, 11=6dB</description>
               <bitRange>[5:4]</bitRange>
             </field>
             <field>
-              <name>ADC_CLK_DIV</name>
+              <name>CLK_DIV</name>
               <description>RW, select ADC clock frequency: 00=3.2MHz, 01=2.67MHz, 10=5.33MHz, 11=4MHz</description>
               <bitRange>[7:6]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_CONVERT</name>
+          <name>CONVERT</name>
           <description>RW, ADC convert control</description>
           <addressOffset>0x5A</addressOffset>
           <size>0x8</size>
@@ -1318,13 +1321,13 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_START</name>
+              <name>START</name>
               <description>RW, ADC convert start control: 0=stop ADC convert, 1=start an ADC convert, auto clear</description>
               <bitRange>[0:0]</bitRange>
               <access>read-write</access>
             </field>
             <field>
-              <name>ADC_EOC_X</name>
+              <name>EOC_X</name>
               <description>RO, end of ADC conversion flag</description>
               <bitRange>[7:7]</bitRange>
               <access>read-only</access>
@@ -1347,7 +1350,7 @@
           </fields>
         </register>
         <register>
-          <name>ADC_DATA</name>
+          <name>DATA</name>
           <description>RO, ADC data</description>
           <addressOffset>0x5C</addressOffset>
           <size>0x10</size>
@@ -1355,14 +1358,14 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_DATA</name>
+              <name>DATA</name>
               <description>RO, ADC conversion data</description>
               <bitRange>[11:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_INT_FLAG</name>
+          <name>INT_FLAG</name>
           <description>RO, ADC interrupt flag register</description>
           <addressOffset>0x5E</addressOffset>
           <size>0x8</size>
@@ -1370,14 +1373,14 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_IF_EOC</name>
+              <name>IF_EOC</name>
               <description>RO, ADC conversion interrupt flag: 0=free or converting, 1=end of conversion, interrupt action, write R8_ADC_CONVERT to clear flag</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_DMA_CTRL</name>
+          <name>DMA_CTRL</name>
           <description>RO, ADC DMA control and status register</description>
           <addressOffset>0x60</addressOffset>
           <size>0x8</size>
@@ -1385,14 +1388,14 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_DMA_CTRL</name>
+              <name>DMA_CTRL</name>
               <description>RW, ADC DMA enable</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_CTRL_DMA</name>
+          <name>CTRL_DMA</name>
           <description>RW, ADC DMA control</description>
           <addressOffset>0x61</addressOffset>
           <size>0x8</size>
@@ -1400,39 +1403,39 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_DMA_ENABLE</name>
+              <name>DMA_ENABLE</name>
               <description>RW, ADC DMA enable</description>
               <bitRange>[0:0]</bitRange>
             </field>
             <field>
-              <name>ADC_DMA_LOOP</name>
+              <name>DMA_LOOP</name>
               <description>RW, ADC DMA address loop enable</description>
               <bitRange>[2:2]</bitRange>
             </field>
             <field>
-              <name>ADC_IE_DMA_END</name>
+              <name>IE_DMA_END</name>
               <description>RW, enable interrupt for ADC DMA completion</description>
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>ADC_IE_EOC</name>
+              <name>IE_EOC</name>
               <description>RW, enable interrupt for end of ADC conversion</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>ADC_CONT_EN</name>
+              <name>CONT_EN</name>
               <description>RW, enable contineous conversion ADC</description>
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
-              <name>ADC_AUTO_EN</name>
+              <name>AUTO_EN</name>
               <description>RW, enable auto continuing ADC for DMA</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_DMA_IF</name>
+          <name>DMA_IF</name>
           <description>RO, ADC interrupt flag</description>
           <addressOffset>0x62</addressOffset>
           <size>0x8</size>
@@ -1440,19 +1443,19 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_IF_DMA_END</name>
+              <name>IF_DMA_END</name>
               <description>interrupt flag for ADC DMA completion</description>
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>ADC_IF_END_ADC</name>
+              <name>IF_END_ADC</name>
               <description>interrupt flag for end of ADC conversion</description>
               <bitRange>[4:4]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_AUTO_CYCLE</name>
+          <name>AUTO_CYCLE</name>
           <description>RO, ADC interrupt flag</description>
           <addressOffset>0x63</addressOffset>
           <size>0x8</size>
@@ -1460,14 +1463,14 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_AUTO_CYCLE</name>
+              <name>AUTO_CYCLE</name>
               <description>auto ADC cycle value, unit is 16 Fsys</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_DMA_NOW</name>
+          <name>DMA_NOW</name>
           <description>RO, ADC DMA current address</description>
           <addressOffset>0x64</addressOffset>
           <size>0x8</size>
@@ -1475,14 +1478,14 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_DMA_NOW</name>
+              <name>DMA_NOW</name>
               <description>ADC DMA current address</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_DMA_BEG</name>
+          <name>DMA_BEG</name>
           <description>RW, ADC DMA begin address</description>
           <addressOffset>0x68</addressOffset>
           <size>0x8</size>
@@ -1490,14 +1493,14 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_DMA_BEG</name>
+              <name>DMA_BEG</name>
               <description>ADC DMA begin address</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>ADC_DMA_END</name>
+          <name>DMA_END</name>
           <description>RW, ADC DMA end address</description>
           <addressOffset>0x6C</addressOffset>
           <size>0x8</size>
@@ -1505,14 +1508,27 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>ADC_DMA_END</name>
+              <name>DMA_END</name>
               <description>ADC DMA end address</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
         </register>
+      </registers>
+    </peripheral>
+    <peripheral>
+      <name>GPIOA</name>
+      <description>System Control Register</description>
+      <groupName>SystemControl</groupName>
+      <baseAddress>0x40001000</baseAddress>
+      <interrupt>
+        <name>GPIOA</name>
+        <description>GPIO_IRQHandler</description>
+        <value>17</value>
+      </interrupt>
+      <registers>
         <register>
-          <name>PA_INT_EN</name>
+          <name>INT_EN</name>
           <description>RW, GPIO PA interrupt enable</description>
           <addressOffset>0x90</addressOffset>
           <size>0x10</size>
@@ -1520,29 +1536,14 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PA_INT_EN</name>
+              <name>INT_EN</name>
               <description>GPIO PA interrupt enable</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PB_INT_EN</name>
-          <description>RW, GPIO PB interrupt enable</description>
-          <addressOffset>0x92</addressOffset>
-          <size>0x10</size>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <fields>
-            <field>
-              <name>PB_INT_EN</name>
-              <description>GPIO PB interrupt enable</description>
-              <bitRange>[15:0]</bitRange>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>PA_INT_MODE</name>
+          <name>INT_MODE</name>
           <description>RW, GPIO PA interrupt mode: 0=level action, 1=edge action</description>
           <addressOffset>0x94</addressOffset>
           <size>0x10</size>
@@ -1550,29 +1551,14 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PA_INT_MODE</name>
+              <name>INT_MODE</name>
               <description>GPIO PA interrupt mode</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PB_INT_MODE</name>
-          <description>RW, GPIO PB interrupt mode: 0=level action, 1=edge action;RW, status for parallel slave read</description>
-          <addressOffset>0x96</addressOffset>
-          <size>0x10</size>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <fields>
-            <field>
-              <name>PB_INT_MODE</name>
-              <description>GPIO PB interrupt mode</description>
-              <bitRange>[15:0]</bitRange>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>PA_INT_IF</name>
+          <name>INT_IF</name>
           <description>RW1, GPIO PA interrupt flag</description>
           <addressOffset>0x9C</addressOffset>
           <size>0x10</size>
@@ -1580,29 +1566,14 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PA_INT_IF</name>
+              <name>INT_IF</name>
               <description>GPIO PA interrupt flag</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PB_INT_IF</name>
-          <description>RW1, GPIO PB interrupt flag</description>
-          <addressOffset>0x9E</addressOffset>
-          <size>0x10</size>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <fields>
-            <field>
-              <name>PB_INT_IF</name>
-              <description>GPIO PB interrupt flag</description>
-              <bitRange>[15:0]</bitRange>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>PA_DIR</name>
+          <name>DIR</name>
           <description>RW, GPIO PA I/O direction: 0=in, 1=out</description>
           <addressOffset>0xA0</addressOffset>
           <size>0x20</size>
@@ -1610,19 +1581,19 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PA_DIR_0</name>
+              <name>DIR_0</name>
               <description>GPIO PA I/O direction byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PA_DIR_1</name>
+              <name>DIR_1</name>
               <description>GPIO PA I/O direction byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PA_PIN</name>
+          <name>PIN</name>
           <description>RO, GPIO PA input</description>
           <addressOffset>0xA4</addressOffset>
           <size>0x20</size>
@@ -1630,19 +1601,19 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PA_PIN_0</name>
+              <name>PIN_0</name>
               <description>GPIO PA input byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PA_PIN_1</name>
+              <name>PIN_1</name>
               <description>GPIO PA input byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PA_OUT</name>
+          <name>OUT</name>
           <description>RW, GPIO PA output</description>
           <addressOffset>0xA8</addressOffset>
           <size>0x20</size>
@@ -1650,19 +1621,19 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PA_OUT_0</name>
+              <name>OUT_0</name>
               <description>GPIO PA output byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PA_OUT_1</name>
+              <name>OUT_1</name>
               <description>GPIO PA output byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PA_CLR</name>
+          <name>CLR</name>
           <description>WZ, GPIO PA clear output: 0=keep, 1=clear</description>
           <addressOffset>0xAC</addressOffset>
           <size>0x20</size>
@@ -1670,19 +1641,19 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PA_CLR_0</name>
+              <name>CLR_0</name>
               <description>GPIO PA clear output byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PA_CLR_1</name>
+              <name>CLR_1</name>
               <description>GPIO PA clear output byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PA_PU</name>
+          <name>PU</name>
           <description>RW, GPIO PA pullup resistance enable</description>
           <addressOffset>0xB0</addressOffset>
           <size>0x20</size>
@@ -1690,19 +1661,19 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PA_PU_0</name>
+              <name>PU_0</name>
               <description>GPIO PA pullup resistance enable byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PA_PU_1</name>
+              <name>PU_1</name>
               <description>GPIO PA pullup resistance enable byte 0</description>
               <bitRange>[15:8]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PA_PD_DRV</name>
+          <name>PD_DRV</name>
           <description>RW, PA pulldown for input or PA driving capability for output</description>
           <addressOffset>0xB4</addressOffset>
           <size>0x20</size>
@@ -1710,19 +1681,77 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PA_PD_DRV_0</name>
+              <name>PD_DRV_0</name>
               <description>PA pulldown for input or PA driving capability for output byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PA_PD_DRV_1</name>
+              <name>PD_DRV_1</name>
               <description>PA pulldown for input or PA driving capability for output byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
           </fields>
         </register>
+      </registers>
+    </peripheral>
+    <peripheral>
+      <name>GPIOB</name>
+      <description>System Control Register</description>
+      <groupName>SystemControl</groupName>
+      <baseAddress>0x40001000</baseAddress>
+      <interrupt>
+        <name>GPIOB</name>
+        <description>GPIO_IRQHandler</description>
+        <value>18</value>
+      </interrupt>
+      <registers>
         <register>
-          <name>PB_DIR</name>
+          <name>INT_EN</name>
+          <description>RW, GPIO PB interrupt enable</description>
+          <addressOffset>0x92</addressOffset>
+          <size>0x10</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>INT_EN</name>
+              <description>GPIO PB interrupt enable</description>
+              <bitRange>[15:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>INT_MODE</name>
+          <description>RW, GPIO PB interrupt mode: 0=level action, 1=edge action</description>
+          <addressOffset>0x96</addressOffset>
+          <size>0x10</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>INT_MODE</name>
+              <description>GPIO PB interrupt mode</description>
+              <bitRange>[15:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>INT_IF</name>
+          <description>RW1, GPIO PB interrupt flag</description>
+          <addressOffset>0x9E</addressOffset>
+          <size>0x10</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>INT_IF</name>
+              <description>GPIO PB interrupt flag</description>
+              <bitRange>[15:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DIR</name>
           <description>RW, GPIO PB I/O direction: 0=in, 1=out</description>
           <addressOffset>0xC0</addressOffset>
           <size>0x20</size>
@@ -1730,24 +1759,24 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PB_DIR_0</name>
+              <name>DIR_0</name>
               <description>GPIO PB I/O direction byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PB_DIR_1</name>
+              <name>DIR_1</name>
               <description>GPIO PB I/O direction byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
             <field>
-              <name>PB_DIR_2</name>
+              <name>DIR_2</name>
               <description>GPIO PB I/O direction byte 2</description>
               <bitRange>[23:16]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PB_PIN</name>
+          <name>PIN</name>
           <description>RO, GPIO PB input</description>
           <addressOffset>0xC4</addressOffset>
           <size>0x20</size>
@@ -1755,49 +1784,49 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PB_PIN_0</name>
+              <name>PIN_0</name>
               <description>GPIO PB input byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PB_PIN_1</name>
+              <name>PIN_1</name>
               <description>GPIO PB input byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
             <field>
-              <name>PB_PIN_2</name>
+              <name>PIN_2</name>
               <description>GPIO PB input byte 2</description>
               <bitRange>[23:16]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PB_OUT__R8_SLV_RD_DATA</name>
-          <description>RW, GPIO PB output;RW, data for parallel slave read</description>
+          <name>OUT</name>
+          <description>RW, GPIO PB output</description>
           <addressOffset>0xC8</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PB_OUT_0</name>
+              <name>OUT_0</name>
               <description>GPIO PB output byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PB_OUT_1</name>
+              <name>OUT_1</name>
               <description>GPIO PB output byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
             <field>
-              <name>PB_OUT_2</name>
+              <name>OUT_2</name>
               <description>GPIO PB output byte 2</description>
               <bitRange>[23:16]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PB_CLR</name>
+          <name>CLR</name>
           <description>WZ, GPIO PB clear output: 0=keep, 1=clear</description>
           <addressOffset>0xCC</addressOffset>
           <size>0x20</size>
@@ -1805,24 +1834,24 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PB_CLR_0</name>
+              <name>CLR_0</name>
               <description>GPIO PB clear output byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PB_CLR_1</name>
+              <name>CLR_1</name>
               <description>GPIO PB clear output byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
             <field>
-              <name>PB_CLR_2</name>
+              <name>CLR_2</name>
               <description>GPIO PB clear output byte 2</description>
               <bitRange>[23:16]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PB_PU</name>
+          <name>PU</name>
           <description>RW, GPIO PB pullup resistance enable</description>
           <addressOffset>0xD0</addressOffset>
           <size>0x20</size>
@@ -1830,24 +1859,24 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PB_PU_0</name>
+              <name>PU_0</name>
               <description>GPIO PB pullup resistance enable byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PB_PU_1</name>
+              <name>PU_1</name>
               <description>GPIO PB pullup resistance enable byte 1</description>
               <bitRange>[15:8]</bitRange>
             </field>
             <field>
-              <name>PB_PU_2</name>
+              <name>PU_2</name>
               <description>GPIO PB pullup resistance enable byte 2</description>
               <bitRange>[23:16]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>PB_PD_DRV</name>
+          <name>PD_DRV</name>
           <description>RW, PB pulldown for input or PB driving capability for output</description>
           <addressOffset>0xD4</addressOffset>
           <size>0x20</size>
@@ -1855,17 +1884,17 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>PB_PD_DRV_0</name>
+              <name>PD_DRV_0</name>
               <description>PB pulldown for input or PB driving capability for output byte 0</description>
               <bitRange>[7:0]</bitRange>
             </field>
             <field>
-              <name>PB_PD_DRV_1</name>
+              <name>PD_DRV_1</name>
               <description>PB pulldown for input or PB driving capability for output byte 0</description>
               <bitRange>[15:8]</bitRange>
             </field>
             <field>
-              <name>PB_PD_DRV_2</name>
+              <name>PD_DRV_2</name>
               <description>PB pulldown for input or PB driving capability for output byte 0</description>
               <bitRange>[23:16]</bitRange>
             </field>
@@ -1918,13 +1947,23 @@
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>UT_POLAR__RB_TMR_CAP_COUNT</name>
-              <description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action;RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
+              <name>UT_POLAR</name>
+              <description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>WM_REPEAT__RB_TMR_CAP_EDGE</name>
-              <description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16;RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
+              <name>AP_COUNT</name>
+              <description>RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>WM_REPEAT</name>
+              <description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16</description>
+              <bitRange>[7:6]</bitRange>
+            </field>
+            <field>
+              <name>AP_EDGE</name>
+              <description>RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
               <bitRange>[7:6]</bitRange>
             </field>
           </fields>
@@ -2107,13 +2146,23 @@
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>UT_POLAR__RB_TMR_CAP_COUNT</name>
-              <description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action;RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
+              <name>UT_POLAR</name>
+              <description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>WM_REPEAT__RB_TMR_CAP_EDGE</name>
-              <description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16;RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
+              <name>AP_COUNT</name>
+              <description>RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>WM_REPEAT</name>
+              <description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16</description>
+              <bitRange>[7:6]</bitRange>
+            </field>
+            <field>
+              <name>AP_EDGE</name>
+              <description>RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
               <bitRange>[7:6]</bitRange>
             </field>
           </fields>
@@ -2361,13 +2410,23 @@
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>UT_POLAR__RB_TMR_CAP_COUNT</name>
-              <description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action;RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
+              <name>UT_POLAR</name>
+              <description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>WM_REPEAT__RB_TMR_CAP_EDGE</name>
-              <description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16;RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
+              <name>AP_COUNT</name>
+              <description>RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>WM_REPEAT</name>
+              <description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16</description>
+              <bitRange>[7:6]</bitRange>
+            </field>
+            <field>
+              <name>AP_EDGE</name>
+              <description>RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
               <bitRange>[7:6]</bitRange>
             </field>
           </fields>
@@ -2617,13 +2676,23 @@
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>UT_POLAR__RB_TMR_CAP_COUNT</name>
-              <description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action;RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
+              <name>UT_POLAR</name>
+              <description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>WM_REPEAT__RB_TMR_CAP_EDGE</name>
-              <description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16;RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
+              <name>AP_COUNT</name>
+              <description>RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>WM_REPEAT</name>
+              <description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16</description>
+              <bitRange>[7:6]</bitRange>
+            </field>
+            <field>
+              <name>AP_EDGE</name>
+              <description>RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
               <bitRange>[7:6]</bitRange>
             </field>
           </fields>
@@ -2801,8 +2870,13 @@
               <bitRange>[2:2]</bitRange>
             </field>
             <field>
-              <name>MCR_OUT2__RB_MCR_INT_OE</name>
-              <description>RW, UART control OUT2/ UART interrupt output enable</description>
+              <name>MCR_OUT2</name>
+              <description>RW, UART control OUT2</description>
+              <bitRange>[3:3]</bitRange>
+            </field>
+            <field>
+              <name>MCR_INT_OE</name>
+              <description>RW, UART interrupt output enable</description>
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
@@ -2941,8 +3015,13 @@
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
-              <name>LCR_GP_BIT__RB_LCR_DLAB</name>
-              <description>RW, UART general purpose bit;RW, UART reserved bit</description>
+              <name>LCR_GP_BIT</name>
+              <description>RW, UART general purpose bit</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+            <field>
+              <name>LCR_DLAB</name>
+              <description>RW, UART reserved bit</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
@@ -3206,8 +3285,13 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MCR_OUT2__RB_MCR_INT_OE</name>
-              <description>RW, UART control OUT2/UART interrupt output enable</description>
+              <name>MCR_OUT2</name>
+              <description>RW, UART control OUT2</description>
+              <bitRange>[3:3]</bitRange>
+            </field>
+            <field>
+              <name>MCR_INT_OE</name>
+              <description>RW, UART interrupt output enable</description>
               <bitRange>[3:3]</bitRange>
             </field>
           </fields>
@@ -3311,8 +3395,13 @@
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
-              <name>LCR_GP_BIT__RB_LCR_DLAB</name>
-              <description>RW, UART general purpose bit;RW, UART reserved bit</description>
+              <name>LCR_GP_BIT</name>
+              <description>RW, UART general purpose bit</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+            <field>
+              <name>LCR_DLAB</name>
+              <description>RW, UART reserved bit</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
@@ -3509,8 +3598,13 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MCR_OUT2__RB_MCR_INT_OE</name>
-              <description>RW, UART control OUT2;UART interrupt output enable</description>
+              <name>MCR_OUT2</name>
+              <description>RW, UART control OUT2</description>
+              <bitRange>[3:3]</bitRange>
+            </field>
+            <field>
+              <name>MCR_INT_OE</name>
+              <description>RW, UART interrupt output enable</description>
               <bitRange>[3:3]</bitRange>
             </field>
           </fields>
@@ -3614,8 +3708,13 @@
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
-              <name>LCR_GP_BIT__RB_LCR_DLAB</name>
-              <description>RW, UART general purpose bit;RW, UART reserved bit</description>
+              <name>LCR_GP_BIT</name>
+              <description>RW, UART general purpose bit</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+            <field>
+              <name>LCR_DLAB</name>
+              <description>RW, UART reserved bit</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
@@ -3812,8 +3911,13 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MCR_OUT2__RB_MCR_INT_OE</name>
-              <description>RW, UART control OUT2;UART interrupt output enable</description>
+              <name>MCR_OUT2</name>
+              <description>RW, UART control OUT2</description>
+              <bitRange>[3:3]</bitRange>
+            </field>
+            <field>
+              <name>MCR_INT_OE</name>
+              <description>RW, UART interrupt output enable</description>
               <bitRange>[3:3]</bitRange>
             </field>
           </fields>
@@ -3917,8 +4021,13 @@
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
-              <name>LCR_GP_BIT__RB_LCR_DLAB</name>
-              <description>RW, UART general purpose bit;RW, UART reserved bit</description>
+              <name>LCR_GP_BIT</name>
+              <description>RW, UART general purpose bit</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+            <field>
+              <name>LCR_DLAB</name>
+              <description>RW, UART reserved bit</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
@@ -4130,8 +4239,13 @@
               <bitRange>[2:2]</bitRange>
             </field>
             <field>
-              <name>ST_SCK_MOD__RB_SPI_SLV_CMD_MOD</name>
-              <description>RW, SPI master clock mode: 0=mode 0, 1=mode 3;RW, SPI0 slave command mode: 0=byte stream, 1=first byte command</description>
+              <name>ST_SCK_MOD</name>
+              <description>RW, SPI master clock mode: 0=mode 0, 1=mode 3</description>
+              <bitRange>[3:3]</bitRange>
+            </field>
+            <field>
+              <name>LV_CMD_MOD</name>
+              <description>RW, SPI0 slave command mode: 0=byte stream, 1=first byte command</description>
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
@@ -4232,16 +4346,31 @@
           </fields>
         </register>
         <register>
-          <name>CLOCK_DIV__R8_SPI0_SLAVE_PRE</name>
-          <description>RW, SPI0 master clock divisor;RW, SPI0 slave preset value</description>
+          <name>CLOCK_DIV</name>
+          <description>RW, SPI0 master clock divisor</description>
           <addressOffset>0x3</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000010</resetValue>
           <fields>
             <field>
-              <name>CLOCK_DIV__R8_SPI0_SLAVE_PRE</name>
-              <description>RW, SPI0 master clock divisor;RW, SPI0 slave preset value</description>
+              <name>CLOCK_DIV</name>
+              <description>RW, SPI0 master clock divisor</description>
+              <bitRange>[7:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>SLAVE_PRE</name>
+          <description>RW, SPI0 slave preset value</description>
+          <addressOffset>0x3</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000010</resetValue>
+          <fields>
+            <field>
+              <name>SLAVE_PRE</name>
+              <description>RW, SPI0 slave preset value</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
@@ -4483,8 +4612,13 @@
               <bitRange>[2:2]</bitRange>
             </field>
             <field>
-              <name>ST_SCK_MOD__RB_SPI_SLV_CMD_MOD</name>
-              <description>RW, SPI master clock mode: 0=mode 0, 1=mode 3;RW, SPI0 slave command mode: 0=byte stream, 1=first byte command</description>
+              <name>ST_SCK_MOD</name>
+              <description>RW, SPI master clock mode: 0=mode 0, 1=mode 3</description>
+              <bitRange>[3:3]</bitRange>
+            </field>
+            <field>
+              <name>LV_CMD_MOD</name>
+              <description>RW, SPI0 slave command mode: 0=byte stream, 1=first byte command</description>
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
@@ -4586,15 +4720,30 @@
         </register>
         <register>
           <name>CLOCK_DIV</name>
-          <description>RW, SPI1 master clock divisor;</description>
+          <description>RW, SPI1 master clock divisor</description>
           <addressOffset>0x3</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000010</resetValue>
           <fields>
             <field>
-              <name>CLOCK_DIV__R8_SPI0_SLAVE_PRE</name>
-              <description>RW, SPI0 master clock divisor;RW, SPI0 slave preset value</description>
+              <name>CLOCK_DIV</name>
+              <description>RW, SPI1 master clock divisor</description>
+              <bitRange>[7:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>SLAVE_PRE</name>
+          <description>RW, SPI1 slave preset value</description>
+          <addressOffset>0x3</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000010</resetValue>
+          <fields>
+            <field>
+              <name>SLAVE_PRE</name>
+              <description>RW, SPI1 slave preset value</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
@@ -5504,7 +5653,7 @@
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>MASK_UC_SYS_CTRL</name>
+              <name>UC_SYS_CTRL</name>
               <description>bit mask of USB system control</description>
               <bitRange>[5:4]</bitRange>
             </field>
@@ -5526,44 +5675,89 @@
           </fields>
         </register>
         <register>
-          <name>UDEV_CTRL__R8_UHOST_CTRL</name>
+          <name>UDEV_CTRL</name>
           <description>USB device physical prot control</description>
           <addressOffset>0x1</addressOffset>
           <size>0x8</size>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>UD_PORT_EN__RB_UH_PORT_EN</name>
-              <description>enable USB physical port I-O: 0=disable, 1=enable;enable USB port: 0=disable, 1=enable port, automatic disabled if USB device detached</description>
+              <name>UD_PORT_EN</name>
+              <description>enable USB physical port I-O: 0=disable, 1=enable</description>
               <bitRange>[0:0]</bitRange>
               <access>read-write</access>
             </field>
             <field>
-              <name>UD_GP_BIT__RB_UH_BUS_RESET</name>
-              <description>general purpose bit;control USB bus reset: 0=normal, 1=force bus reset</description>
+              <name>UD_GP_BIT</name>
+              <description>general purpose bit</description>
               <bitRange>[1:1]</bitRange>
               <access>read-write</access>
             </field>
             <field>
-              <name>UD_LOW_SPEED__RB_UH_LOW_SPEED</name>
-              <description>enable USB physical port low speed: 0=full speed, 1=low speed;enable USB port low speed: 0=full speed, 1=low speed</description>
+              <name>UD_LOW_SPEED</name>
+              <description>enable USB physical port low speed: 0=full speed, 1=low speed</description>
               <bitRange>[2:2]</bitRange>
               <access>read-write</access>
             </field>
             <field>
-              <name>UD_DM_PIN__RB_UH_DM_PIN</name>
+              <name>UD_DM_PIN</name>
               <description>ReadOnly: indicate current UDM pin level</description>
               <bitRange>[4:4]</bitRange>
               <access>read-only</access>
             </field>
             <field>
-              <name>UD_DP_PIN__RB_UH_DP_PIN</name>
+              <name>UD_DP_PIN</name>
               <description>ReadOnly: indicate current UDP pin level</description>
               <bitRange>[5:5]</bitRange>
               <access>read-only</access>
             </field>
             <field>
-              <name>UD_PD_DIS__RB_UH_PD_DIS</name>
+              <name>UD_PD_DIS</name>
+              <description>disable USB UDP-UDM pulldown resistance: 0=enable pulldown, 1=disable</description>
+              <bitRange>[7:7]</bitRange>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>UHOST_CTRL</name>
+          <description>USB device physical prot control</description>
+          <addressOffset>0x1</addressOffset>
+          <size>0x8</size>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_PORT_EN</name>
+              <description>enable USB port: 0=disable, 1=enable port, automatic disabled if USB device detached</description>
+              <bitRange>[0:0]</bitRange>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>UH_BUS_RESET</name>
+              <description>control USB bus reset: 0=normal, 1=force bus reset</description>
+              <bitRange>[1:1]</bitRange>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>UH_LOW_SPEED</name>
+              <description>enable USB port low speed: 0=full speed, 1=low speed</description>
+              <bitRange>[2:2]</bitRange>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>UH_DM_PIN</name>
+              <description>ReadOnly: indicate current UDM pin level</description>
+              <bitRange>[4:4]</bitRange>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>UH_DP_PIN</name>
+              <description>ReadOnly: indicate current UDP pin level</description>
+              <bitRange>[5:5]</bitRange>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>UH_PD_DIS</name>
               <description>disable USB UDP-UDM pulldown resistance: 0=enable pulldown, 1=disable</description>
               <bitRange>[7:7]</bitRange>
               <access>read-only</access>
@@ -5579,8 +5773,13 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>UIE_BUS_RST__RB_UIE_DETECT</name>
-              <description>enable interrupt for USB bus reset event for USB device mode;enable interrupt for USB device detected event for USB host mode</description>
+              <name>UIE_BUS_RST</name>
+              <description>enable interrupt for USB bus reset event for USB device mode</description>
+              <bitRange>[0:0]</bitRange>
+            </field>
+            <field>
+              <name>UIE_DETECT</name>
+              <description>enable interrupt for USB device detected event for USB host mode</description>
               <bitRange>[0:0]</bitRange>
             </field>
             <field>
@@ -5624,7 +5823,7 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_USB_ADDR</name>
+              <name>ADDR</name>
               <description>bit mask for USB device address</description>
               <bitRange>[6:0]</bitRange>
             </field>
@@ -5693,8 +5892,13 @@
           <resetValue>0x00000020</resetValue>
           <fields>
             <field>
-              <name>UIF_BUS_RST__RB_UIF_DETECT</name>
-              <description>RW,bus reset event interrupt flag for USB device mode, direct bit address clear or write 1 to clear;device detected event interrupt flag for USB host mode, direct bit address clear or write 1 to clear</description>
+              <name>UIF_BUS_RST</name>
+              <description>RW,bus reset event interrupt flag for USB device mode, direct bit address clear or write 1 to clear</description>
+              <bitRange>[0:0]</bitRange>
+            </field>
+            <field>
+              <name>UIF_DETECT</name>
+              <description>RW,device detected event interrupt flag for USB host mode, direct bit address clear or write 1 to clear</description>
               <bitRange>[0:0]</bitRange>
             </field>
             <field>
@@ -5746,12 +5950,17 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UIS_H_RES__MASK_UIS_ENDP</name>
-              <description>RO, bit mask of current transfer handshake response for USB host mode: 0000=no response, time out from device, others=handshake response PID received;RO, bit mask of current transfer endpoint number for USB device mode</description>
+              <name>UIS_H_RES</name>
+              <description>RO, bit mask of current transfer handshake response for USB host mode: 0000=no response, time out from device, others=handshake response PID received</description>
               <bitRange>[3:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UIS_TOKEN</name>
+              <name>UIS_ENDP</name>
+              <description>RO, bit mask of current transfer endpoint number for USB device mode</description>
+              <bitRange>[3:0]</bitRange>
+            </field>
+            <field>
+              <name>UIS_TOKEN</name>
               <description>RO, bit mask of current token PID code received for USB device mode</description>
               <bitRange>[5:4]</bitRange>
             </field>
@@ -5818,16 +6027,16 @@
           </fields>
         </register>
         <register>
-          <name>UEP2_3_MOD__R8_UH_EP_MOD</name>
-          <description>endpoint 2_3 mode;host endpoint mode</description>
+          <name>UEP2_3_MOD</name>
+          <description>endpoint 2_3 mode</description>
           <addressOffset>0xD</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>UEP2_BUF_MOD__RB_UH_EP_RBUF_MOD</name>
-              <description>buffer mode of USB endpoint 2;buffer mode of USB host IN endpoint</description>
+              <name>UEP2_BUF_MOD</name>
+              <description>buffer mode of USB endpoint 2</description>
               <bitRange>[0:0]</bitRange>
             </field>
             <field>
@@ -5836,24 +6045,54 @@
               <bitRange>[2:2]</bitRange>
             </field>
             <field>
-              <name>UEP2_RX_EN__RB_UH_EP_RX_EN</name>
-              <description>enable USB endpoint 2 receiving (OUT);enable USB host IN endpoint receiving</description>
+              <name>UEP2_RX_EN</name>
+              <description>enable USB endpoint 2 receiving (OUT)</description>
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>UEP3_BUF_MOD__RB_UH_EP_TBUF_MOD</name>
-              <description>buffer mode of USB endpoint 3;buffer mode of USB host OUT endpoint</description>
+              <name>UEP3_BUF_MOD</name>
+              <description>buffer mode of USB endpoint 3</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>UEP3_TX_EN__RB_UH_EP_TX_EN</name>
-              <description>enable USB endpoint 3 transmittal (IN);enable USB host OUT endpoint transmittal</description>
+              <name>UEP3_TX_EN</name>
+              <description>enable USB endpoint 3 transmittal (IN)</description>
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
               <name>UEP3_RX_EN</name>
               <description>enable USB endpoint 3 receiving (OUT)</description>
               <bitRange>[7:7]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>UH_EP_MOD</name>
+          <description>host endpoint mode</description>
+          <addressOffset>0xD</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_EP_RBUF_MOD</name>
+              <description>buffer mode of USB host IN endpoint</description>
+              <bitRange>[0:0]</bitRange>
+            </field>
+            <field>
+              <name>UH_EP_RX_EN</name>
+              <description>enable USB host IN endpoint receiving</description>
+              <bitRange>[3:3]</bitRange>
+            </field>
+            <field>
+              <name>UH_EP_TBUF_MOD</name>
+              <description>buffer mode of USB host OUT endpoint</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>UH_EP_TX_EN</name>
+              <description>enable USB host OUT endpoint transmittal</description>
+              <bitRange>[6:6]</bitRange>
             </field>
           </fields>
         </register>
@@ -5928,8 +6167,8 @@
           </fields>
         </register>
         <register>
-          <name>UEP2_DMA__R16_UH_RX_DMA</name>
-          <description>endpoint 2 DMA buffer address;host rx endpoint buffer high address</description>
+          <name>UEP2_DMA</name>
+          <description>endpoint 2 DMA buffer address</description>
           <addressOffset>0x18</addressOffset>
           <size>0x10</size>
           <access>read-write</access>
@@ -5937,21 +6176,50 @@
           <fields>
             <field>
               <name>UEP2_DMA</name>
-              <description>RW,endpoint 2 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 2 DMA buffer address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>UEP3_DMA__R16_UH_TX_DMA</name>
-          <description>endpoint 3 DMA buffer address;host tx endpoint buffer high address</description>
+          <name>UH_RX_DMA</name>
+          <description>host rx endpoint buffer high address</description>
+          <addressOffset>0x18</addressOffset>
+          <size>0x10</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UEP2_DMA</name>
+              <description>RW,host rx endpoint buffer high address</description>
+              <bitRange>[15:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>UEP3_DMA</name>
+          <description>endpoint 3 DMA buffer address</description>
           <addressOffset>0x1C</addressOffset>
           <size>0x10</size>
           <access>read-write</access>
           <fields>
             <field>
               <name>UEP3_DMA</name>
-              <description>RW,endpoint 3 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 3 DMA buffer address</description>
+              <bitRange>[15:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>UH_TX_DMA</name>
+          <description>host tx endpoint buffer high address</description>
+          <addressOffset>0x1C</addressOffset>
+          <size>0x10</size>
+          <access>read-write</access>
+          <fields>
+            <field>
+              <name>UEP3_DMA</name>
+              <description>RW,host tx endpoint buffer high address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
@@ -5965,7 +6233,7 @@
           <fields>
             <field>
               <name>UEP5_DMA</name>
-              <description>RW,endpoint 5 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 5 DMA buffer address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
@@ -5979,7 +6247,7 @@
           <fields>
             <field>
               <name>UEP6_DMA</name>
-              <description>RW,endpoint 6 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 6 DMA buffer address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
@@ -5993,7 +6261,7 @@
           <fields>
             <field>
               <name>UEP7_DMA</name>
-              <description>RW,endpoint 7 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 7 DMA buffer address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
@@ -6022,12 +6290,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -6064,20 +6332,20 @@
           </fields>
         </register>
         <register>
-          <name>UEP1_CTRL__R8_UH_SETUP</name>
-          <description>endpoint 1 control;host aux setup</description>
+          <name>UEP1_CTRL</name>
+          <description>endpoint 1 control</description>
           <addressOffset>0x26</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -6087,68 +6355,93 @@
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>UEP_T_TOG__RB_UH_SOF_EN</name>
-              <description>prepared data toggle flag of USB endpoint X transmittal (IN): 0=DATA0, 1=DATA1;USB host automatic SOF enable</description>
+              <name>UEP_T_TOG</name>
+              <description>prepared data toggle flag of USB endpoint X transmittal (IN): 0=DATA0, 1=DATA1</description>
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
-              <name>UEP_R_TOG__RB_UH_PRE_PID_EN</name>
-              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1;RB_UH_PRE_PID_EN;USB host PRE PID enable for low speed device via hub</description>
+              <name>UEP_R_TOG</name>
+              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>UEP2_T_LEN_R8_UH_EP_PID</name>
-          <description>endpoint 2 transmittal length;host endpoint and PID</description>
+          <name>UH_SETUP</name>
+          <description>host aux setup</description>
+          <addressOffset>0x26</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_SOF_EN</name>
+              <description>USB host automatic SOF enable</description>
+              <bitRange>[6:6]</bitRange>
+            </field>
+            <field>
+              <name>UH_PRE_PID_EN</name>
+              <description>USB host PRE PID enable for low speed device via hub</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>UEP2_T_LEN</name>
+          <description>endpoint 2 transmittal length</description>
           <addressOffset>0x28</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UH_ENDP</name>
-              <description>bit mask of endpoint number for USB host transfer</description>
-              <bitRange>[3:0]</bitRange>
-            </field>
-            <field>
-              <name>MASK_UH_TOKEN</name>
-              <description>bit mask of token PID for USB host transfer</description>
-              <bitRange>[7:4]</bitRange>
-            </field>
-            <field>
               <name>UEP2_T_LEN</name>
-              <description>endpoint 2 transmittal length;</description>
+              <description>endpoint 2 transmittal length</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>UEP2_CTRL_R8_UH_RX_CTRL</name>
-          <description>endpoint 2 control;host receiver endpoint control</description>
+          <name>UH_EP_PID</name>
+          <description>host endpoint and PID</description>
+          <addressOffset>0x28</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_ENDP</name>
+              <description>bit mask of endpoint number for USB host transfer</description>
+              <bitRange>[3:0]</bitRange>
+            </field>
+            <field>
+              <name>UH_TOKEN</name>
+              <description>bit mask of token PID for USB host transfer</description>
+              <bitRange>[7:4]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>UEP2_CTRL</name>
+          <description>endpoint 2 control</description>
           <addressOffset>0x2A</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UH_R_RES</name>
-              <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
-              <bitRange>[2:2]</bitRange>
-            </field>
-            <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
             <field>
-              <name>UEP_AUTO_TOG__RB_UH_R_AUTO_TOG</name>
-              <description>enable automatic toggle after successful transfer completion on endpoint 1_2_3: 0=manual toggle, 1=automatic toggle;enable automatic toggle after successful transfer completion: 0=manual toggle, 1=automatic toggle</description>
+              <name>UEP_AUTO_TOG</name>
+              <description>enable automatic toggle after successful transfer completion on endpoint 1_2_3: 0=manual toggle, 1=automatic toggle</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
@@ -6157,30 +6450,110 @@
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
-              <name>UEP_R_TOG__RB_UH_R_TOG</name>
-              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1;expected data toggle flag of host receiving (IN): 0=DATA0, 1=DATA1</description>
+              <name>UEP_R_TOG</name>
+              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>UEP3_T_LEN__R8_UH_TX_LEN</name>
-          <description>endpoint 3 transmittal length;host transmittal endpoint transmittal length</description>
+          <name>UH_RX_CTRL</name>
+          <description>host receiver endpoint control</description>
+          <addressOffset>0x2A</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_R_RES</name>
+              <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
+              <bitRange>[2:2]</bitRange>
+            </field>
+            <field>
+              <name>UEP_R_RES</name>
+              <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
+              <bitRange>[3:2]</bitRange>
+            </field>
+            <field>
+              <name>UH_R_AUTO_TOG</name>
+              <description>enable automatic toggle after successful transfer completion: 0=manual toggle, 1=automatic toggle</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>UH_R_TOG</name>
+              <description>expected data toggle flag of host receiving (IN): 0=DATA0, 1=DATA1</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>UEP3_T_LEN</name>
+          <description>endpoint 3 transmittal length</description>
           <addressOffset>0x2C</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>UEP3_T_LEN__R8_UH_TX_LEN</name>
+              <name>UEP3_T_LEN</name>
               <description>endpoint 1 transmittal length</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>UEP3_CTRL__R8_UH_TX_CTRL</name>
-          <description>endpoint 3 control;host transmittal endpoint control</description>
+          <name>UH_TX_LEN</name>
+          <description>host transmittal endpoint transmittal length</description>
+          <addressOffset>0x2C</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_TX_LEN</name>
+              <description>endpoint 1 transmittal length</description>
+              <bitRange>[7:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>UEP3_CTRL</name>
+          <description>endpoint 3 control</description>
+          <addressOffset>0x2E</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UEP_T_RES</name>
+              <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
+              <bitRange>[1:0]</bitRange>
+            </field>
+            <field>
+              <name>UEP_R_RES</name>
+              <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
+              <bitRange>[3:2]</bitRange>
+            </field>
+            <field>
+              <name>UEP_AUTO_TOG</name>
+              <description>enable automatic toggle after successful transfer completion on endpoint 1_2_3: 0=manual toggle, 1=automatic toggle</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>UEP_T_TOG</name>
+              <description>prepared data toggle flag of USB endpoint X transmittal (IN): 0=DATA0, 1=DATA1</description>
+              <bitRange>[6:6]</bitRange>
+            </field>
+            <field>
+              <name>UEP_R_TOG</name>
+              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>UH_TX_CTRL</name>
+          <description>host transmittal endpoint control</description>
           <addressOffset>0x2E</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
@@ -6192,29 +6565,14 @@
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_T_RES</name>
-              <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
-              <bitRange>[1:0]</bitRange>
-            </field>
-            <field>
-              <name>MASK_UEP_R_RES</name>
-              <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
-              <bitRange>[3:2]</bitRange>
-            </field>
-            <field>
-              <name>UEP_AUTO_TOG_RB_UH_T_AUTO_TOG</name>
+              <name>UH_T_AUTO_TOG</name>
               <description>enable automatic toggle after successful transfer completion on endpoint 1_2_3: 0=manual toggle, 1=automatic toggle</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>UEP_T_TOG_RB_UH_T_TOG</name>
+              <name>UH_T_TOG</name>
               <description>prepared data toggle flag of USB endpoint X transmittal (IN): 0=DATA0, 1=DATA1</description>
               <bitRange>[6:6]</bitRange>
-            </field>
-            <field>
-              <name>UEP_R_TOG</name>
-              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1</description>
-              <bitRange>[7:7]</bitRange>
             </field>
           </fields>
         </register>
@@ -6242,12 +6600,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -6292,12 +6650,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -6342,12 +6700,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -6392,12 +6750,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -6465,7 +6823,7 @@
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>MASK_UC_SYS_CTRL</name>
+              <name>UC_SYS_CTRL</name>
               <description>bit mask of USB system control</description>
               <bitRange>[5:4]</bitRange>
             </field>
@@ -6487,44 +6845,89 @@
           </fields>
         </register>
         <register>
-          <name>U2DEV_CTRL__R8_U2HOST_CTRL</name>
+          <name>U2DEV_CTRL</name>
           <description>USB2 device physical prot control</description>
           <addressOffset>0x1</addressOffset>
           <size>0x8</size>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>UD_PORT_EN__RB_UH_PORT_EN</name>
-              <description>enable USB physical port I-O: 0=disable, 1=enable;enable USB port: 0=disable, 1=enable port, automatic disabled if USB device detached</description>
+              <name>UD_PORT_EN</name>
+              <description>enable USB physical port I-O: 0=disable, 1=enable</description>
               <bitRange>[0:0]</bitRange>
               <access>read-write</access>
             </field>
             <field>
-              <name>UD_GP_BIT__RB_UH_BUS_RESET</name>
-              <description>general purpose bit;control USB bus reset: 0=normal, 1=force bus reset</description>
+              <name>UD_GP_BIT</name>
+              <description>general purpose bit</description>
               <bitRange>[1:1]</bitRange>
               <access>read-write</access>
             </field>
             <field>
-              <name>UD_LOW_SPEED__RB_UH_LOW_SPEED</name>
-              <description>enable USB physical port low speed: 0=full speed, 1=low speed;enable USB port low speed: 0=full speed, 1=low speed</description>
+              <name>UD_LOW_SPEED</name>
+              <description>enable USB physical port low speed: 0=full speed, 1=low speed</description>
               <bitRange>[2:2]</bitRange>
               <access>read-write</access>
             </field>
             <field>
-              <name>UD_DM_PIN__RB_UH_DM_PIN</name>
+              <name>UD_DM_PIN</name>
               <description>ReadOnly: indicate current UDM pin level</description>
               <bitRange>[4:4]</bitRange>
               <access>read-only</access>
             </field>
             <field>
-              <name>UD_DP_PIN__RB_UH_DP_PIN</name>
+              <name>UD_DP_PIN</name>
               <description>ReadOnly: indicate current UDP pin level</description>
               <bitRange>[5:5]</bitRange>
               <access>read-only</access>
             </field>
             <field>
-              <name>UD_PD_DIS__RB_UH_PD_DIS</name>
+              <name>UD_PD_DIS</name>
+              <description>disable USB UDP-UDM pulldown resistance: 0=enable pulldown, 1=disable</description>
+              <bitRange>[7:7]</bitRange>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>U2HOST_CTRL</name>
+          <description>USB2 device physical prot control</description>
+          <addressOffset>0x1</addressOffset>
+          <size>0x8</size>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_PORT_EN</name>
+              <description>enable USB port: 0=disable, 1=enable port, automatic disabled if USB device detached</description>
+              <bitRange>[0:0]</bitRange>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>UH_BUS_RESET</name>
+              <description>control USB bus reset: 0=normal, 1=force bus reset</description>
+              <bitRange>[1:1]</bitRange>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>UH_LOW_SPEED</name>
+              <description>enable USB port low speed: 0=full speed, 1=low speed</description>
+              <bitRange>[2:2]</bitRange>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>UH_DM_PIN</name>
+              <description>ReadOnly: indicate current UDM pin level</description>
+              <bitRange>[4:4]</bitRange>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>UH_DP_PIN</name>
+              <description>ReadOnly: indicate current UDP pin level</description>
+              <bitRange>[5:5]</bitRange>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>UH_PD_DIS</name>
               <description>disable USB UDP-UDM pulldown resistance: 0=enable pulldown, 1=disable</description>
               <bitRange>[7:7]</bitRange>
               <access>read-only</access>
@@ -6540,8 +6943,13 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>UIE_BUS_RST__RB_UIE_DETECT</name>
-              <description>enable interrupt for USB bus reset event for USB device mode;enable interrupt for USB device detected event for USB host mode</description>
+              <name>UIE_BUS_RST</name>
+              <description>enable interrupt for USB bus reset event for USB device mode</description>
+              <bitRange>[0:0]</bitRange>
+            </field>
+            <field>
+              <name>UIE_DETECT</name>
+              <description>enable interrupt for USB device detected event for USB host mode</description>
               <bitRange>[0:0]</bitRange>
             </field>
             <field>
@@ -6580,7 +6988,7 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_USB_ADDR</name>
+              <name>USB_ADDR</name>
               <description>bit mask for USB device address</description>
               <bitRange>[6:0]</bitRange>
             </field>
@@ -6649,8 +7057,13 @@
           <resetValue>0x00000020</resetValue>
           <fields>
             <field>
-              <name>UIF_BUS_RST__RB_UIF_DETECT</name>
-              <description>RW,bus reset event interrupt flag for USB device mode, direct bit address clear or write 1 to clear;device detected event interrupt flag for USB host mode, direct bit address clear or write 1 to clear</description>
+              <name>UIF_BUS_RST</name>
+              <description>RW,bus reset event interrupt flag for USB device mode, direct bit address clear or write 1 to clear</description>
+              <bitRange>[0:0]</bitRange>
+            </field>
+            <field>
+              <name>UIF_DETECT</name>
+              <description>RW,device detected event interrupt flag for USB host mode, direct bit address clear or write 1 to clear</description>
               <bitRange>[0:0]</bitRange>
             </field>
             <field>
@@ -6702,12 +7115,17 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UIS_H_RES__MASK_UIS_ENDP</name>
-              <description>RO, bit mask of current transfer handshake response for USB host mode: 0000=no response, time out from device, others=handshake response PID received;RO, bit mask of current transfer endpoint number for USB device mode</description>
+              <name>UIS_H_RES</name>
+              <description>RO, bit mask of current transfer handshake response for USB host mode: 0000=no response, time out from device, others=handshake response PID received</description>
               <bitRange>[3:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UIS_TOKEN</name>
+              <name>UIS_ENDP</name>
+              <description>RO, bit mask of current transfer endpoint number for USB device mode</description>
+              <bitRange>[3:0]</bitRange>
+            </field>
+            <field>
+              <name>UIS_TOKEN</name>
               <description>RO, bit mask of current token PID code received for USB device mode</description>
               <bitRange>[5:4]</bitRange>
             </field>
@@ -6774,16 +7192,16 @@
           </fields>
         </register>
         <register>
-          <name>U2EP2_3_MOD__R8_U2H_EP_MOD</name>
-          <description>endpoint 2_3 mode;host endpoint mode</description>
+          <name>U2EP2_3_MOD</name>
+          <description>endpoint 2_3 mode</description>
           <addressOffset>0xD</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>UEP2_BUF_MOD__RB_UH_EP_RBUF_MOD</name>
-              <description>buffer mode of USB endpoint 2;buffer mode of USB host IN endpoint</description>
+              <name>UEP2_BUF_MOD</name>
+              <description>buffer mode of USB endpoint 2</description>
               <bitRange>[0:0]</bitRange>
             </field>
             <field>
@@ -6792,24 +7210,54 @@
               <bitRange>[2:2]</bitRange>
             </field>
             <field>
-              <name>UEP2_RX_EN__RB_UH_EP_RX_EN</name>
-              <description>enable USB endpoint 2 receiving (OUT);enable USB host IN endpoint receiving</description>
+              <name>UEP2_RX_EN</name>
+              <description>enable USB endpoint 2 receiving (OUT)</description>
               <bitRange>[3:3]</bitRange>
             </field>
             <field>
-              <name>UEP3_BUF_MOD__RB_UH_EP_TBUF_MOD</name>
-              <description>buffer mode of USB endpoint 3;buffer mode of USB host OUT endpoint</description>
+              <name>UEP3_BUF_MOD</name>
+              <description>buffer mode of USB endpoint 3</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>UEP3_TX_EN__RB_UH_EP_TX_EN</name>
-              <description>enable USB endpoint 3 transmittal (IN);enable USB host OUT endpoint transmittal</description>
+              <name>UEP3_TX_EN</name>
+              <description>enable USB endpoint 3 transmittal (IN)</description>
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
               <name>UEP3_RX_EN</name>
               <description>enable USB endpoint 3 receiving (OUT)</description>
               <bitRange>[7:7]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>U2H_EP_MOD</name>
+          <description>host endpoint mode</description>
+          <addressOffset>0xD</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_EP_RBUF_MOD</name>
+              <description>buffer mode of USB host IN endpoint</description>
+              <bitRange>[0:0]</bitRange>
+            </field>
+            <field>
+              <name>UH_EP_RX_EN</name>
+              <description>enable USB host IN endpoint receiving</description>
+              <bitRange>[3:3]</bitRange>
+            </field>
+            <field>
+              <name>UH_EP_TBUF_MOD</name>
+              <description>buffer mode of USB host OUT endpoint</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>UH_EP_TX_EN</name>
+              <description>enable USB host OUT endpoint transmittal</description>
+              <bitRange>[6:6]</bitRange>
             </field>
           </fields>
         </register>
@@ -6884,8 +7332,8 @@
           </fields>
         </register>
         <register>
-          <name>U2EP2_DMA__R16_U2H_RX_DMA</name>
-          <description>USB2 endpoint 2 DMA buffer address;host rx endpoint buffer high address</description>
+          <name>U2EP2_DMA</name>
+          <description>USB2 endpoint 2 DMA buffer address</description>
           <addressOffset>0x18</addressOffset>
           <size>0x10</size>
           <access>read-write</access>
@@ -6893,21 +7341,50 @@
           <fields>
             <field>
               <name>UEP2_DMA</name>
-              <description>RW,endpoint 2 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 2 DMA buffer address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>U2EP3_DMA__R16_U2H_TX_DMA</name>
-          <description>USB2 endpoint 3 DMA buffer address;host tx endpoint buffer high address</description>
+          <name>U2H_RX_DMA</name>
+          <description>host rx endpoint buffer high address</description>
+          <addressOffset>0x18</addressOffset>
+          <size>0x10</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_RX_DMA</name>
+              <description>RW,host rx endpoint buffer high address</description>
+              <bitRange>[15:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>U2EP3_DMA</name>
+          <description>USB2 endpoint 3 DMA buffer address</description>
           <addressOffset>0x1C</addressOffset>
           <size>0x10</size>
           <access>read-write</access>
           <fields>
             <field>
               <name>UEP3_DMA</name>
-              <description>RW,endpoint 3 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 3 DMA buffer address</description>
+              <bitRange>[15:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>U2H_TX_DMA</name>
+          <description>host tx endpoint buffer high address</description>
+          <addressOffset>0x1C</addressOffset>
+          <size>0x10</size>
+          <access>read-write</access>
+          <fields>
+            <field>
+              <name>UH_TX_DMA</name>
+              <description>RW,host tx endpoint buffer high address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
@@ -6921,7 +7398,7 @@
           <fields>
             <field>
               <name>UEP5_DMA</name>
-              <description>RW,endpoint 5 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 5 DMA buffer address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
@@ -6935,7 +7412,7 @@
           <fields>
             <field>
               <name>UEP6_DMA</name>
-              <description>RW,endpoint 6 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 6 DMA buffer address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
@@ -6949,7 +7426,7 @@
           <fields>
             <field>
               <name>UEP7_DMA</name>
-              <description>RW,endpoint 7 DMA buffer address;host rx endpoint buffer high address</description>
+              <description>RW,endpoint 7 DMA buffer address</description>
               <bitRange>[15:0]</bitRange>
             </field>
           </fields>
@@ -6978,12 +7455,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -7020,20 +7497,20 @@
           </fields>
         </register>
         <register>
-          <name>U2EP1_CTRL__R8_U2H_SETUP</name>
-          <description>USB2 endpoint 1 control;host aux setup</description>
+          <name>U2EP1_CTRL</name>
+          <description>USB2 endpoint 1 control</description>
           <addressOffset>0x26</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -7043,68 +7520,93 @@
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>UEP_T_TOG__RB_UH_SOF_EN</name>
-              <description>prepared data toggle flag of USB endpoint X transmittal (IN): 0=DATA0, 1=DATA1;USB host automatic SOF enable</description>
+              <name>UEP_T_TOG</name>
+              <description>prepared data toggle flag of USB endpoint X transmittal (IN): 0=DATA0, 1=DATA1</description>
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
-              <name>UEP_R_TOG__RB_UH_PRE_PID_EN</name>
-              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1;RB_UH_PRE_PID_EN;USB host PRE PID enable for low speed device via hub</description>
+              <name>UEP_R_TOG</name>
+              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>U2EP2_T_LEN_R8_U2H_EP_PID</name>
-          <description>USB2 endpoint 2 transmittal length;host endpoint and PID</description>
+          <name>U2H_SETUP</name>
+          <description>host aux setup</description>
+          <addressOffset>0x26</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_SOF_EN</name>
+              <description>USB host automatic SOF enable</description>
+              <bitRange>[6:6]</bitRange>
+            </field>
+            <field>
+              <name>UH_PRE_PID_EN</name>
+              <description>USB host PRE PID enable for low speed device via hub</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>U2EP2_T_LEN</name>
+          <description>USB2 endpoint 2 transmittal length</description>
           <addressOffset>0x28</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UH_ENDP</name>
-              <description>bit mask of endpoint number for USB host transfer</description>
-              <bitRange>[3:0]</bitRange>
-            </field>
-            <field>
-              <name>MASK_UH_TOKEN</name>
-              <description>bit mask of token PID for USB host transfer</description>
-              <bitRange>[7:4]</bitRange>
-            </field>
-            <field>
               <name>UEP2_T_LEN</name>
-              <description>endpoint 2 transmittal length;</description>
+              <description>endpoint 2 transmittal length</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>U2EP2_CTRL_R8_U2H_RX_CTRL</name>
-          <description>USB2 endpoint 2 control;host receiver endpoint control</description>
+          <name>U2H_EP_PID</name>
+          <description>host endpoint and PID</description>
+          <addressOffset>0x28</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_ENDP</name>
+              <description>bit mask of endpoint number for USB host transfer</description>
+              <bitRange>[3:0]</bitRange>
+            </field>
+            <field>
+              <name>UH_TOKEN</name>
+              <description>bit mask of token PID for USB host transfer</description>
+              <bitRange>[7:4]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>U2EP2_CTRL</name>
+          <description>USB2 endpoint 2 control</description>
           <addressOffset>0x2A</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UH_R_RES</name>
-              <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
-              <bitRange>[2:2]</bitRange>
-            </field>
-            <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
             <field>
-              <name>UEP_AUTO_TOG__RB_UH_R_AUTO_TOG</name>
-              <description>enable automatic toggle after successful transfer completion on endpoint 1_2_3: 0=manual toggle, 1=automatic toggle;enable automatic toggle after successful transfer completion: 0=manual toggle, 1=automatic toggle</description>
+              <name>UEP_AUTO_TOG</name>
+              <description>enable automatic toggle after successful transfer completion on endpoint 1_2_3: 0=manual toggle, 1=automatic toggle</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
@@ -7113,30 +7615,105 @@
               <bitRange>[6:6]</bitRange>
             </field>
             <field>
-              <name>UEP_R_TOG__RB_UH_R_TOG</name>
-              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1;expected data toggle flag of host receiving (IN): 0=DATA0, 1=DATA1</description>
+              <name>UEP_R_TOG</name>
+              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1</description>
               <bitRange>[7:7]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>U2EP3_T_LEN__R8_U2H_TX_LEN</name>
-          <description>USB2 endpoint 3 transmittal length;host transmittal endpoint transmittal length</description>
+          <name>U2H_RX_CTRL</name>
+          <description>host receiver endpoint control</description>
+          <addressOffset>0x2A</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_R_RES</name>
+              <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
+              <bitRange>[2:2]</bitRange>
+            </field>
+            <field>
+              <name>UH_R_AUTO_TOG</name>
+              <description>enable automatic toggle after successful transfer completion: 0=manual toggle, 1=automatic toggle</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>UH_R_TOG</name>
+              <description>expected data toggle flag of host receiving (IN): 0=DATA0, 1=DATA1</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>U2EP3_T_LEN</name>
+          <description>USB2 endpoint 3 transmittal length</description>
           <addressOffset>0x2C</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>UEP3_T_LEN__R8_UH_TX_LEN</name>
-              <description>endpoint 1 transmittal length</description>
+              <name>UEP3_T_LEN</name>
+              <description>endpoint 3 transmittal length</description>
               <bitRange>[7:0]</bitRange>
             </field>
           </fields>
         </register>
         <register>
-          <name>U2EP3_CTRL__R8_U2H_TX_CTRL</name>
-          <description>USB2 endpoint 3 control;host transmittal endpoint control</description>
+          <name>U2H_TX_LEN</name>
+          <description>host transmittal endpoint transmittal length</description>
+          <addressOffset>0x2C</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UH_TX_LEN</name>
+              <description>host transmittal endpoint transmittal length</description>
+              <bitRange>[7:0]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>U2EP3_CTRL</name>
+          <description>USB2 endpoint 3 control</description>
+          <addressOffset>0x2E</addressOffset>
+          <size>0x8</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>UEP_T_RES</name>
+              <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
+              <bitRange>[1:0]</bitRange>
+            </field>
+            <field>
+              <name>UEP_R_RES</name>
+              <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
+              <bitRange>[3:2]</bitRange>
+            </field>
+            <field>
+              <name>UEP_AUTO_TOG</name>
+              <description>enable automatic toggle after successful transfer completion on endpoint 1_2_3: 0=manual toggle, 1=automatic toggle</description>
+              <bitRange>[4:4]</bitRange>
+            </field>
+            <field>
+              <name>UEP_T_TOG</name>
+              <description>prepared data toggle flag of USB endpoint X transmittal (IN): 0=DATA0, 1=DATA1</description>
+              <bitRange>[6:6]</bitRange>
+            </field>
+            <field>
+              <name>UEP_R_TOG</name>
+              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1</description>
+              <bitRange>[7:7]</bitRange>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>U2H_TX_CTRL</name>
+          <description>host transmittal endpoint control</description>
           <addressOffset>0x2E</addressOffset>
           <size>0x8</size>
           <access>read-write</access>
@@ -7148,29 +7725,14 @@
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_T_RES</name>
-              <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
-              <bitRange>[1:0]</bitRange>
-            </field>
-            <field>
-              <name>MASK_UEP_R_RES</name>
-              <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
-              <bitRange>[3:2]</bitRange>
-            </field>
-            <field>
-              <name>UEP_AUTO_TOG_RB_UH_T_AUTO_TOG</name>
+              <name>UH_T_AUTO_TOG</name>
               <description>enable automatic toggle after successful transfer completion on endpoint 1_2_3: 0=manual toggle, 1=automatic toggle</description>
               <bitRange>[4:4]</bitRange>
             </field>
             <field>
-              <name>UEP_T_TOG_RB_UH_T_TOG</name>
+              <name>UH_T_TOG</name>
               <description>prepared data toggle flag of USB endpoint X transmittal (IN): 0=DATA0, 1=DATA1</description>
               <bitRange>[6:6]</bitRange>
-            </field>
-            <field>
-              <name>UEP_R_TOG</name>
-              <description>expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1</description>
-              <bitRange>[7:7]</bitRange>
             </field>
           </fields>
         </register>
@@ -7198,12 +7760,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -7248,12 +7810,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -7298,12 +7860,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>
@@ -7348,12 +7910,12 @@
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>MASK_UEP_T_RES</name>
+              <name>UEP_T_RES</name>
               <description>bit mask of handshake response type for USB endpoint X transmittal (IN)</description>
               <bitRange>[1:0]</bitRange>
             </field>
             <field>
-              <name>MASK_UEP_R_RES</name>
+              <name>UEP_R_RES</name>
               <description>bit mask of handshake response type for USB endpoint X receiving (OUT)</description>
               <bitRange>[3:2]</bitRange>
             </field>

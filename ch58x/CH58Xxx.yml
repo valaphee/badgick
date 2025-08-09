@@ -1,0 +1,49 @@
+riscv_config:
+  core_interrupts:
+  - name: NonMaskable
+    value: 2
+  - name: Exception
+    value: 3
+  - name: MachineEnvCall
+    value: 5
+  - name: UserEnvCall
+    value: 8
+  - name: Breakpoint
+    value: 9
+  - name: SysTick
+    value: 12
+  - name: Software
+    value: 14
+  priorities:
+  - name: P0
+    value: 0x00
+  - name: P1
+    value: 0x10
+  - name: P2
+    value: 0x20
+  - name: P3
+    value: 0x30
+  - name: P4
+    value: 0x40
+  - name: P5
+    value: 0x50
+  - name: P6
+    value: 0x60
+  - name: P7
+    value: 0x70
+  - name: P8
+    value: 0x80
+  - name: P9
+    value: 0x90
+  - name: P10
+    value: 0xA0
+  - name: P11
+    value: 0xB0
+  - name: P12
+    value: 0xC0
+  - name: P13
+    value: 0xD0
+  - name: P14
+    value: 0xE0
+  - name: P15
+    value: 0xF0

@@ -7,6 +7,7 @@ _svd: CH58Xxx.svd
     - R32_
   "*":
     _strip:
+      - MASK_
       - RB_
       - R8_
       - R16_
@@ -17,6 +18,27 @@ SYS:
     _modify:
       32K_CLK_PIN:
         name: CLK_32K_PIN
+
+ADC:
+  _strip:
+    - ADC_
+  "*":
+    _strip:
+      - ADC_
+
+GPIOA:
+  _strip:
+    - PA_
+  "*":
+    _strip:
+      - PA_
+
+GPIOB:
+  _strip:
+    - PB_
+  "*":
+    _strip:
+      - PB_
 
 TMR*:
   _strip:

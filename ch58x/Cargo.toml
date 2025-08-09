@@ -4,11 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-critical-section = { version = "1.2", optional = true }
 riscv = "0.14"
-riscv-rt = { version = "0.15", optional = true }
 vcell = "0.1"
 
+critical-section = { version = "1.2", optional = true }
+
 [features]
-rt = ["riscv-rt"]
-v-trap = ["rt", "riscv-rt/v-trap"]
+rt = []
