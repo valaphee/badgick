@@ -9,9 +9,9 @@ edition = "2024"
 
 [dependencies]
 critical-section = "1.2"
-riscv = { version = "0.14", features = ["critical-section-single-hart" ] }
-riscv-rt = { version = "0.15", features = ["device", "memory", "single-hart", "v-trap" ] }
-ch58x = { path = "ch58x", features = ["critical-section", "rt"] }
+riscv = "0.14"
+riscv-rt = "0.15"
+ch58x = { path = "ch58x", features = ["critical-section", "rt", "v-trap"] }
 fugit = "0.3"
 
 embedded-hal = "1.0"
@@ -25,3 +25,7 @@ embassy-sync = "0.7"
 lto = true
 codegen-units = 1
 panic = "abort"
+
+[patch.crates-io]
+riscv = { git = "https://github.com/rust-embedded/riscv.git" }
+riscv-rt = { git = "https://github.com/rust-embedded/riscv.git" }

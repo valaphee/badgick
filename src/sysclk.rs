@@ -36,14 +36,14 @@ impl SysTickDriver {
         self.cnt_per_tick
             .store(cnt_per_tick as u32, Ordering::Relaxed);
 
-        // init and enable counter
+        // Init and enable counter
         systick.ctl().write(|w| w.init().set_bit().ste().set_bit());
 
-        // reset compare value and clear interrupt flag
+        // Reset compare value and clear interrupt flag
         systick.cmp().reset();
         systick.s().write(|w| w.cntif().clear_bit());
 
-        // count up without reloading and use HCLK/8
+        // Count up without reloading and use HCLK/8
         systick
             .ctl()
             .modify(|_, w| w.mode().clear_bit().stre().clear_bit().stclk().clear_bit());
@@ -54,7 +54,7 @@ impl SysTickDriver {
     }
 
     fn trigger_alarm(&self, cs: CriticalSection) {
-        // clear interrupt flag
+        // Clear interrupt flag
         self.systick
             .get()
             .unwrap()
@@ -78,21 +78,21 @@ impl SysTickDriver {
     fn set_alarm(&self, _cs: CriticalSection, next_alarm_cnt: u64) -> bool {
         let systick = self.systick.get().unwrap();
 
-        // already passed
+        // Already passed
         if next_alarm_cnt <= self.cnt() {
             return false;
         }
 
-        // set compare value
+        // Set compare value
         systick
             .cmp()
             .write(|w| unsafe { w.cmp().bits(next_alarm_cnt) });
 
-        // enable interrupt
+        // Enable interrupt
         systick.ctl().modify(|_, w| w.stie().set_bit());
         systick.s().write(|w| w.cntif().clear_bit());
 
-        // already passed, disable interrupt
+        // Already passed, disable interrupt
         if next_alarm_cnt <= self.cnt() {
             systick.ctl().modify(|_, w| w.stie().clear_bit());
             systick.s().write(|w| w.cntif().clear_bit());

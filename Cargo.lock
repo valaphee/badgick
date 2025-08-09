@@ -36,6 +36,7 @@ version = "0.1.0"
 dependencies = [
  "critical-section",
  "riscv",
+ "riscv-rt",
  "vcell",
 ]
 
@@ -287,8 +288,7 @@ dependencies = [
 [[package]]
 name = "riscv"
 version = "0.14.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f1671c79a01a149fe000af2429ce9ccc8e58cdecda72672355d50e5536b363c"
+source = "git+https://github.com/rust-embedded/riscv.git#6c0c255cd03453716c715a35cde8c66720bbaf2c"
 dependencies = [
  "critical-section",
  "embedded-hal",
@@ -300,8 +300,7 @@ dependencies = [
 [[package]]
 name = "riscv-macros"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8c4aa1ea1af6dcc83a61be12e8189f9b293c3ba5a487778a4cd89fb060fdbbc"
+source = "git+https://github.com/rust-embedded/riscv.git#6c0c255cd03453716c715a35cde8c66720bbaf2c"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -311,14 +310,12 @@ dependencies = [
 [[package]]
 name = "riscv-pac"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8188909339ccc0c68cfb5a04648313f09621e8b87dc03095454f1a11f6c5d436"
+source = "git+https://github.com/rust-embedded/riscv.git#6c0c255cd03453716c715a35cde8c66720bbaf2c"
 
 [[package]]
 name = "riscv-rt"
 version = "0.15.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b6c77da9c9db362b1eec256399aa01b0b30c5af164921bc208f34fd6710cd938"
+source = "git+https://github.com/rust-embedded/riscv.git#6c0c255cd03453716c715a35cde8c66720bbaf2c"
 dependencies = [
  "riscv",
  "riscv-pac",
@@ -329,8 +326,7 @@ dependencies = [
 [[package]]
 name = "riscv-rt-macros"
 version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "617d6812f513a0bad8d6d0b54c7225b36f5b024e821f3ec42e7c21051c9aacd3"
+source = "git+https://github.com/rust-embedded/riscv.git#6c0c255cd03453716c715a35cde8c66720bbaf2c"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -340,8 +336,7 @@ dependencies = [
 [[package]]
 name = "riscv-target-parser"
 version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fb12701a0129e07776b285c3fbde53166e6c49c350187adf793c1d7e1dc64355"
+source = "git+https://github.com/rust-embedded/riscv.git#6c0c255cd03453716c715a35cde8c66720bbaf2c"
 
 [[package]]
 name = "stable_deref_trait"

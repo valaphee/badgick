@@ -68,7 +68,6 @@ impl PficExt for PFIC {
 
     fn get_priority(&self, interrupt: impl InterruptNumber) -> Priority {
         let off = interrupt.number() / 32;
-        let bit = interrupt.number() % 32;
         Priority::from_number(unsafe { self.iprior0().as_ptr().add(off).read_volatile() } as _)
             .unwrap()
     }

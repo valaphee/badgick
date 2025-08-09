@@ -4,10 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+critical-section = { version = "1.2", features = ["restore-state-bool"], optional = true }
 riscv = "0.14"
+riscv-rt = { version = "0.15", features = ["device", "memory", "single-hart", "no-xie-xip", "post-init"], optional = true }
 vcell = "0.1"
 
-critical-section = { version = "1.2", optional = true }
-
 [features]
-rt = []
+rt = ["riscv-rt"]
+v-trap = ["rt"]
