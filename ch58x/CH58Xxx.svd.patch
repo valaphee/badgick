@@ -18,6 +18,12 @@ SYS:
     _modify:
       32K_CLK_PIN:
         name: CLK_32K_PIN
+  _add:
+    FLASH_CFG:
+      description: Flash configuration
+      addressOffset: 0x807
+      size: 8
+      access: read-write
 
 ADC:
   _strip:

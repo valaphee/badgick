@@ -1,4 +1,4 @@
-use pac::{PFIC, interrupt::Priority};
+use pac::{Pfic, interrupt::Priority};
 use riscv::{InterruptNumber, PriorityNumber};
 
 pub trait PficExt {
@@ -13,7 +13,7 @@ pub trait PficExt {
     fn get_priority(&self, interrupt: impl InterruptNumber) -> Priority;
 }
 
-impl PficExt for PFIC {
+impl PficExt for Pfic {
     fn enable(&self, interrupt: impl InterruptNumber) {
         let off = interrupt.number() / 32;
         let bit = interrupt.number() % 32;

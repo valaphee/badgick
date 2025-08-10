@@ -1,4 +1,4 @@
-use crate::{pfic::PficExt, sys::Sys};
+use crate::{pfic::PficExt, sys::SysExt};
 use core::{
     cell::{OnceCell, RefCell},
     sync::atomic::{AtomicU32, Ordering},
@@ -8,30 +8,30 @@ use embassy_sync::blocking_mutex::{Mutex, raw::CriticalSectionRawMutex};
 use embassy_time_driver::{Driver, TICK_HZ};
 use embassy_time_queue_utils::Queue;
 use pac::{
-    PFIC, SYSTICK,
+    Pfic, Sys, Systick,
     interrupt::{CoreInterrupt, Priority},
 };
 
-pub struct SysTickDriver {
-    systick: OnceCell<SYSTICK>,
+pub struct SystickDriver {
+    systick: OnceCell<Systick>,
     cnt_per_tick: AtomicU32,
     queue: Mutex<CriticalSectionRawMutex, RefCell<Queue>>,
 }
 
-unsafe impl Sync for SysTickDriver {}
+unsafe impl Sync for SystickDriver {}
 
-embassy_time_driver::time_driver_impl!(static DRIVER: SysTickDriver = SysTickDriver {
+embassy_time_driver::time_driver_impl!(static DRIVER: SystickDriver = SystickDriver {
     systick: OnceCell::new(),
     cnt_per_tick: AtomicU32::new(0),
     queue: Mutex::new(RefCell::new(Queue::new()))
 });
 
-impl SysTickDriver {
-    fn init(&'static self, systick: SYSTICK, sys: &Sys) {
+impl SystickDriver {
+    fn init(&'static self, systick: Systick, sys: &Sys) {
         self.systick.set(systick).unwrap();
         let systick = self.systick.get().unwrap();
 
-        let cnt_per_second = sys.clocks.fsys.raw() as u64;
+        let cnt_per_second = sys.fsys() as u64;
         let cnt_per_tick = cnt_per_second / TICK_HZ;
         self.cnt_per_tick
             .store(cnt_per_tick as u32, Ordering::Relaxed);
@@ -103,7 +103,7 @@ impl SysTickDriver {
     }
 }
 
-impl Driver for SysTickDriver {
+impl Driver for SystickDriver {
     fn now(&self) -> u64 {
         let cnt_per_tick = self.cnt_per_tick.load(Ordering::Relaxed) as u64;
         self.cnt() / cnt_per_tick
@@ -123,7 +123,7 @@ impl Driver for SysTickDriver {
     }
 }
 
-pub fn init(systick: SYSTICK, sys: &Sys, pfic: &PFIC) {
+pub fn init(systick: Systick, sys: &Sys, pfic: &Pfic) {
     DRIVER.init(systick, sys);
 
     pfic.set_priority(CoreInterrupt::SysTick, Priority::P15);

@@ -11,14 +11,14 @@ mod sysclk;
 
 use embassy_executor::Spawner;
 
-use crate::sys::SysExt;
+use crate::sys::{Config, SysExt};
 
 #[embassy_executor::main]
 async fn main(_spawner: Spawner) -> ! {
     let peripherals = pac::Peripherals::take().unwrap();
 
-    let sys = peripherals.SYS.constrain().freeze();
-    sysclk::init(peripherals.SYSTICK, &sys, &peripherals.PFIC);
+    let sys = peripherals.sys.set(Config::pll(8));
+    sysclk::init(peripherals.systick, &sys, &peripherals.pfic);
 
     loop {}
 }
